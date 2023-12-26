@@ -1,4 +1,4 @@
-// Assuming your server is running on localhost and port 3000
+// Assuming your servers are running on localhost and port 3000
 const apiUrl = 'http://localhost:3000/users';
 console.log("hello")
 // Function to call the API and log the response
