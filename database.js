@@ -1,40 +1,36 @@
-import express from 'express';
 import mysql from 'mysql2';
+import dotenv from 'dotenv';
+dotenv.config();    
 
-// Create a new express application instance
-const app = express();
-const port = 3000; // Port where the server will listen
 
-// Create a pool of connections for MySQL
 const pool = mysql.createPool({
-    host: '127.0.0.1',
-    user: 'root',
-    password: 'haseeb123456789',
-    database: 'testing'
-}).promise();
-
-// Function to get user information from the database
-async function getUserInfo() {
-  try {
-      const [result] = await pool.query("SELECT * FROM user");
-      return result;
-  } catch (error) {
-      console.error('Error fetching users:', error);
-      throw error; // Rethrow for further handling if necessary.
-  }
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_DATABASE
+}).promise()
+let password=0;
+let email="";
+export async function get_details_fromAPI(pass,mail) {
+    password=pass;
+    email=mail;
+    
 }
 
-// Define a route for fetching user data
-app.get('/users', async (req, res) => {
-    try {
-        const users = await getUserInfo();
-        res.json(users); // Send the user data as JSON
-    } catch (error) {
-        res.status(500).send('Error fetching users');
+export async function verify_user_details() {
+    try{
+    console.log("email is",email,"password is",password)
+    const result= await pool.query("SELECT name,id FROM user where password1 = ? AND email = ?",[password,email])
+    console.log(result[0])
+    if(result.length == 0){
+        return false
     }
-});
-
-// Start the server and listen on the specified port
-app.listen(port, () => {
-    console.log(`Server started on http://localhost:${port}`);
-});
+    
+    return result[0]
+}
+    catch (error) {
+        console.error('Error fetching users:', error);
+        throw error;
+    }
+    
+}
