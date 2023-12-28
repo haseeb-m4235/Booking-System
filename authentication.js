@@ -23,9 +23,7 @@ async function fetchUsers(data) {
 
     console.log("The user is ",response[0].name,"with id",response[0].id)
 
-        
-
-        
+                
     }catch (error) {
         // Log any errors to the console
         console.error('Failed to send details to server:', error);
@@ -38,7 +36,7 @@ async function fetchUsers(data) {
 document.getElementById('loginForm').addEventListener('submit', function (e) {
   e.preventDefault();
 
-  const email = document.getElementById('username').value;
+  const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
 
 
