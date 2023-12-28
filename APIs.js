@@ -12,7 +12,8 @@ app.post("/signupuser", async (req, res) => {
     const password = req.body.password;
     const email = req.body.email;
     const name=req.body.name;
-    signupuser(password,email,name);
+    const contactnumber=req.body.contactnumber;
+    signupuser(password,email,name,contactnumber);
     console.log("Data is sent successfully to signupuser function");
     // Perform any asynchronous operations here, if needed
   } catch (error) {

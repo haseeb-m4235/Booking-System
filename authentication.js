@@ -21,7 +21,7 @@ async function fetchUsers(data) {
         return data
     });
 
-    console.log("The user is ",response[0].name,"with id",response[0].id)
+    console.log("The user is ",response[0].Name,"with id",response[0].UserID)
 
                 
     }catch (error) {
