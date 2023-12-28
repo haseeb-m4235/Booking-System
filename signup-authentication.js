@@ -20,20 +20,64 @@ async function signupuser(data) {
 }
 
 
-document.getElementById('signupForm').addEventListener('submit', function (e) {
-    e.preventDefault();
+// document.getElementById('signupForm').addEventListener('submit', function (e) {
+//     e.preventDefault();
   
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('signup-password').value;
-    const name=document.getElementById('name').value;
+//     const email = document.getElementById('email').value;
+//     const password = document.getElementById('signup-password').value;
+//     const name=document.getElementById('name').value;
   
   
-    const data = {
-      email: email,
-      password: password,
-      name:name
-    };
+//     const data = {
+//       email: email,
+//       password: password,
+//       name:name
+//     };
   
-    signupuser(data);
+//     signupuser(data);
   
-  });
+//   });
+
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('signupForm');
+  
+    form.addEventListener('submit', function (event) {
+      event.preventDefault(); // Prevent the form from submitting the traditional way
+  
+      // Get the values from the form inputs
+      const username = document.getElementById('username').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+  
+      // Validate the form data
+      if (validateForm(username, email, password, confirmPassword)) {
+        // If validation passes, send this data to a server
+        console.log("sending data to server")
+        const data = {
+            email: email,
+            password: password,
+            name:username
+          };
+        signupuser(data);
+        console.log('Form is valid, send data to server or handle it here.');
+        // For example: sendDataToServer({ username, email, password });
+      } else {
+        // If validation fails, show an appropriate message or handle errors
+        console.error('Form is invalid, show error messages.');
+      }
+    });
+// A simple client-side validation function
+function validateForm(username, email, password, confirmPassword) {
+    const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); // Simple email regex
+    const isValidPassword = (password) => password.length >= 8; // Check if password is at least 8 characters
+    const isPasswordMatch = (password, confirmPassword) => password === confirmPassword;
+
+    return (
+      username.trim() !== '' &&
+      isValidEmail(email) &&
+      isValidPassword(password) &&
+      isPasswordMatch(password, confirmPassword)
+    ) 
+    }
+    });
