@@ -49,15 +49,16 @@ document.addEventListener('DOMContentLoaded', function () {
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
       const confirmPassword = document.getElementById('confirmPassword').value;
-  
+      const contactnumber = document.getElementById('contactNumber').value;
       // Validate the form data
-      if (validateForm(username, email, password, confirmPassword)) {
+      if (validateForm(username, email, password, confirmPassword,contactnumber)) {
         // If validation passes, send this data to a server
         console.log("sending data to server")
         const data = {
             email: email,
             password: password,
-            name:username
+            name:username,
+            contactnumber:contactnumber
           };
         signupuser(data);
         console.log('Form is valid, send data to server or handle it here.');
@@ -68,16 +69,18 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
 // A simple client-side validation function
-function validateForm(username, email, password, confirmPassword) {
+function validateForm(username, email, password, confirmPassword,contactnumber) {
     const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); // Simple email regex
     const isValidPassword = (password) => password.length >= 8; // Check if password is at least 8 characters
     const isPasswordMatch = (password, confirmPassword) => password === confirmPassword;
+    //const isValidcontactnumber = (contactnumber) => typeof contactnumber === 'number';;
 
     return (
       username.trim() !== '' &&
       isValidEmail(email) &&
       isValidPassword(password) &&
-      isPasswordMatch(password, confirmPassword)
+      isPasswordMatch(password, confirmPassword) 
+      //isValidcontactnumber(contactnumber)
     ) 
     }
     });

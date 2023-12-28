@@ -21,7 +21,7 @@ export async function get_details_fromAPI(pass,mail) {
 export async function verify_user_details() {
     try{
     console.log("email is",email,"password is",password)
-    const result= await pool.query("SELECT name,id FROM user where password1 = ? AND email = ?",[password,email])
+    const result= await pool.query("SELECT Name,UserID FROM user where password = ? AND email = ?",[password,email])
     console.log(result[0])
     if(result.length == 0){
         return false
@@ -36,10 +36,10 @@ export async function verify_user_details() {
     
 }
 
-export async function signupuser(password,email,name) {
+export async function signupuser(password,email,name,contactnumber) {
     try{
     console.log("email is",email,"password is",password," name is",name)
-    await pool.query("INSERT INTO user (name,email,password1) VALUES (?,?,?)",[name,email,password])
+    await pool.query("INSERT INTO user (Name,Email,password,ContactDetails) VALUES (?,?,?,?)",[name,email,password,contactnumber])
     console.log("Data is sent successfully to sql");
 }
     catch (error) {
