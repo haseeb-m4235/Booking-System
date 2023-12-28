@@ -9,6 +9,7 @@ const pool = mysql.createPool({
     password: process.env.DB_PASS,
     database: process.env.DB_DATABASE
 }).promise()
+
 let password=0;
 let email="";
 export async function get_details_fromAPI(pass,mail) {
@@ -27,6 +28,19 @@ export async function verify_user_details() {
     }
     
     return result[0]
+}
+    catch (error) {
+        console.error('Error fetching users:', error);
+        throw error;
+    }
+    
+}
+
+export async function signupuser(password,email,name) {
+    try{
+    console.log("email is",email,"password is",password," name is",name)
+    await pool.query("INSERT INTO user (name,email,password1) VALUES (?,?,?)",[name,email,password])
+    console.log("Data is sent successfully to sql");
 }
     catch (error) {
         console.error('Error fetching users:', error);

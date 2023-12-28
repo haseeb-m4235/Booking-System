@@ -1,14 +1,38 @@
 import express from "express";
 import cors from 'cors';
-import {verify_user_details,get_details_fromAPI} from "./database.js";
+import {verify_user_details,get_details_fromAPI,signupuser} from "./database.js";
 const app = express();
 app.use(cors());
 app.use(express.json())
 
-app.get("/verifyuser",async (req,res)=>{
-    try{
+
+
+app.post("/signupuser", async (req, res) => {
+  try {
     const password = req.body.password;
     const email = req.body.email;
+    const name=req.body.name;
+    signupuser(password,email,name);
+    console.log("Data is sent successfully to signupuser function");
+    // Perform any asynchronous operations here, if needed
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).send('Error fetching user');
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
+app.get("/verifyuser",async (req,res)=>{
+    try{
     const result = await verify_user_details();
     res.json(result);
     } catch (error) {
@@ -16,11 +40,6 @@ app.get("/verifyuser",async (req,res)=>{
     }
 
 });
-
-
-
-
-
 
 app.post("/senduserdata", async (req, res) => {
     try {
