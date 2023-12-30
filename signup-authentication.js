@@ -11,7 +11,7 @@ async function signupuser(data) {
         body: JSON.stringify(data), // Convert data to string
     });
     console.log("The user is signed up successfully. Now redirecting to login page.")
-    window.location.href = "login.html";
+    window.location.href = "index.html";
 
     }catch (error) {
         // Log any errors to the console
