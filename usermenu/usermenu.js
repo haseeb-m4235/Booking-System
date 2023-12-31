@@ -1,4 +1,6 @@
-var concerts = [
+// now here in these variables we will make different apis for each category and call
+// them in the usermenu.js file and show the data
+var concerts = [ 
   { name: "Jazz Night", date: "2024-01-15", timings: "19:00", venue: "Downtown Arena", tickets: "120" },
   { name: "Rock Fest", date: "2024-01-20", timings: "18:00", venue: "Riverfront Amphitheater", tickets: "200" }
 ];
@@ -25,33 +27,33 @@ var movies = [
 ];
   
 
-// Dummy data for user's bookings
-var myBookings = [
-  // Assuming you have a way to track user's bookings, they might look something like this
-  { category: 'movie', name: "Intersteler", date: "2024-01-20", timings: "15:00", venue: "Centaurus", tickets: "2" },
-  { category: 'movie', name: "Intersteler", date: "2024-01-20", timings: "15:00", venue: "Centaurus", tickets: "2" }
-  // ... more bookings
-];
-
+const myBookings = fetch('http://127.0.0.1:8080/senduserbookings', {
+  method: 'GET'
+}).then(response => response.json());
 
 // Add event listener to My Bookings link
 document.getElementById('myBookings').addEventListener('click', displayMyBookings);
 
-// Function to display user's bookings
 function displayMyBookings() {
   var categoryContent = document.getElementById('categoryContent');
   var categoryTitle = document.getElementById('categoryTitle');
   categoryTitle.textContent = 'My Bookings'; // Set the title to "My Bookings"
   categoryContent.innerHTML = ''; // Clear the content
 
-  // Populate with user's bookings
-  myBookings.forEach(function(booking) {
-    var bookingItem = document.createElement('div');
-    bookingItem.classList.add('category');
-    bookingItem.innerHTML = `<strong>${booking.category.toUpperCase()}: ${booking.name}</strong> <br> Date: ${booking.date} <br> Timings: ${booking.timings} <br> Venue: ${booking.venue} <br> Tickets: ${booking.tickets}`;
-    categoryContent.appendChild(bookingItem);
+  // Wait for the Promise to resolve
+  myBookings.then(data => {
+    // Use the data inside the Promise
+    data.forEach(function(booking) {
+      var bookingItem = document.createElement('div');
+      bookingItem.classList.add('category');
+      bookingItem.innerHTML = `<strong>${booking.category.toUpperCase()}: ${booking.name}</strong> <br> Date: ${booking.date} <br> Timings: ${booking.timings} <br> Venue: ${booking.venue} <br> Tickets: ${booking.tickets}`;
+      categoryContent.appendChild(bookingItem);
+    });
+  }).catch(error => {
+    console.error('Error fetching data:', error);
   });
 }
+
 
 
 function toggleSidebar() {
@@ -78,7 +80,7 @@ function createBookingButton() {
   button.textContent = 'Book Now';
   button.onclick = function() {
     alert('Redirecting to payment portal...');
-    window.location.href = "/Payment/index.html";
+    window.location.href = "../Payment/payment.html";
 
   };
   return button;

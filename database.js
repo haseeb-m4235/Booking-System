@@ -18,6 +18,29 @@ export async function get_details_fromAPI(pass,mail) {
     
 }
 
+let userid=0;
+export async function get_userid_fromAPI(id) {
+    userid=id;
+    
+}
+export async function send_user_bookings() {
+    try{
+        console.log("email is",email,"password is",password)
+        const result= await pool.query("SELECT category,name,date,timings,venue,tickets FROM booking where UserID = ?",[userid])
+        console.log(result[0])
+        if(result.length == 0){
+            return false
+        }
+        
+        return result[0]
+    }
+        catch (error) {
+            console.error('Error fetching users:', error);
+            throw error;
+        }
+    
+}
+
 export async function verify_user_details() {
     try{
     console.log("email is",email,"password is",password)

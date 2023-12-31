@@ -20,8 +20,21 @@ async function fetchUsers(data) {
     .then(data => {
         return data
     });
-
+    // sending user id to backend to redirect him to his own page
     console.log("The user is ",response[0].Name,"with id",response[0].UserID)
+    const userid={
+        userid:response[0].UserID,
+        username:response[0].Name
+    }
+    fetch("http://127.0.0.1:8080/senduserid", {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json', 
+    },
+        body: JSON.stringify(userid), // Convert data to string
+    });
+
+    window.location.href = "../usermenu/usermenu.html";
 
                 
     }catch (error) {
