@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Booking System</title>
+    <link rel="stylesheet" href="usermenu.css" type="text/css">
+</head>
+<body>
+    <div class="hamburger-menu" onclick="toggleSidebar()">
+        &#9776; <!-- This is the hamburger icon -->
+    </div>
+    <div class="sidebar hidden">
+        <a href="#" id="myBookings">My Bookings</a>
+        <a href="../login.html" id="signOut">Sign Out</a>
+    </div>
+
+    <div class="title-container">
+        <h1>Booking.com</h1>
+    </div>
+    <nav>
+        <a href="#" onclick="showCategory('movies')">Movies</a>
+        <a href="#" onclick="showCategory('concerts')">Concerts</a>
+        <a href="#" onclick="showCategory('buses')">Bus</a>
+        <a href="#" onclick="showCategory('flights')">Flights</a>
+        <a href="#" onclick="showCategory('trains')">Trains</a>
+    </nav>
+      
+    <div class="container">
+        <h1 id="categoryTitle">Movies</h1>
+        <div id="categoryContent">
+          <!-- Content will be loaded here dynamically -->
+        </div>
+    </div>
+
+    <script src="usermenu.js"></script>
+</body>
+</html>
