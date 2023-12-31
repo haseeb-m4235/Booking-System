@@ -1,6 +1,6 @@
 import express from "express";
 import cors from 'cors';
-import {verify_user_details,get_details_fromAPI,signupuser} from "./database.js";
+import {verify_user_details,get_details_fromAPI,signupuser,get_userid_fromAPI,send_user_bookings} from "./database.js";
 const app = express();
 app.use(cors());
 app.use(express.json())
@@ -24,7 +24,27 @@ app.post("/signupuser", async (req, res) => {
 
 
 
+app.post("/senduserid", async (req, res) => {
+  try{
+  const userid = req.body.userid;
+  const username=req.body.username;
+  get_userid_fromAPI(userid);
+  console.log("User ID is sent successfully to sql");
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).send('Error fetching user');
+  }
+});
 
+app.get("/senduserbookings",async (req,res)=>{
+    try{
+    const result = await send_user_bookings();
+    res.json(result);
+    } catch (error) {
+        res.status(500).send('Error fetching users');
+    }
+
+});
 
 
 

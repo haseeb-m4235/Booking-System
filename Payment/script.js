@@ -22,11 +22,12 @@ document.getElementById('paymentForm').addEventListener('submit', function(event
     // Add additional validation as necessary
   
     alert('Form is valid, proceed with payment processing.');
+    
   });
   
   function cancelPayment() {
     if (confirm('Are you sure you want to cancel the payment?')) {
-      window.location.href = 'index.html'; // Redirect to a different page or perform another action
+      window.location.href = "../usermenu/usermenu.html";
     }
   }
   
