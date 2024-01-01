@@ -1,9 +1,80 @@
 import express from "express";
 import cors from 'cors';
-import {verify_user_details,get_details_fromAPI,signupuser,get_userid_fromAPI,send_user_bookings} from "./database.js";
+import {verify_user_details,get_details_fromAPI,signupuser,get_userid_fromAPI,send_user_bookings,addevent,showconcerts,showbuses,showtrains
+,showflights,showmovies} from "./database.js";
 const app = express();
 app.use(cors());
 app.use(express.json())
+
+
+app.post("/addevent", async (req, res) => {
+  try {
+    const type = req.body.type;
+    const schedule = req.body.date;
+    const ticket=req.body.tickets;
+    const eventtime=req.body.timings;
+    const venue=req.body.venue;
+    const eventname=req.body.name;
+    addevent(type,schedule,ticket,eventtime,venue,eventname);
+    console.log("Data is sent successfully");
+    // Perform any asynchronous operations here, if needed
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).send('Error fetching user');
+  }
+});
+
+app.get("/showconcerts",async (req,res)=>{
+  try{
+  const result = await showconcerts();
+  res.json(result);
+  } catch (error) {
+      res.status(500).send('Error fetching users');
+  }
+
+});
+
+app.get("/showbuses",async (req,res)=>{
+  try{
+  const result = await showbuses();
+  res.json(result);
+  } catch (error) {
+      res.status(500).send('Error fetching users');
+  }
+
+});
+
+app.get("/showtrains",async (req,res)=>{
+  try{
+  const result = await showtrains();
+  res.json(result);
+  } catch (error) {
+      res.status(500).send('Error fetching users');
+  }
+
+});
+
+app.get("/showflights",async (req,res)=>{
+  try{
+  const result = await showflights();
+  res.json(result);
+  } catch (error) {
+      res.status(500).send('Error fetching users');
+  }
+
+});
+
+app.get("/showmovies",async (req,res)=>{
+  try{
+  const result = await showmovies();
+  res.json(result);
+  } catch (error) {
+      res.status(500).send('Error fetching users');
+  }
+
+});
+
+
 
 
 
@@ -13,7 +84,8 @@ app.post("/signupuser", async (req, res) => {
     const email = req.body.email;
     const name=req.body.name;
     const contactnumber=req.body.contactnumber;
-    signupuser(password,email,name,contactnumber);
+    const usertype=req.body.usertype;
+    signupuser(password,email,name,contactnumber,usertype);
     console.log("Data is sent successfully to signupuser function");
     // Perform any asynchronous operations here, if needed
   } catch (error) {

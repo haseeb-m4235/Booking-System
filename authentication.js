@@ -34,7 +34,12 @@ async function fetchUsers(data) {
         body: JSON.stringify(userid), // Convert data to string
     });
 
-    window.location.href = "../usermenu/usermenu.html";
+    if(response[0].usertype=='customer'){
+    window.location.href = "../usermenu/usermenu.html";}
+
+    if(response[0].usertype=='admin'){
+        window.location.href = "../admin/admin.html";}
+
 
                 
     }catch (error) {

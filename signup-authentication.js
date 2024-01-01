@@ -58,7 +58,8 @@ document.addEventListener('DOMContentLoaded', function () {
             email: email,
             password: password,
             name:username,
-            contactnumber:contactnumber
+            contactnumber:contactnumber,
+            usertype:"customer"
           };
         signupuser(data);
         console.log('Form is valid, send data to server or handle it here.');

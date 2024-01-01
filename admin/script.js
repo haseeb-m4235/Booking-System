@@ -33,62 +33,43 @@ document.getElementById('eventForm').addEventListener('submit', function(e) {
 });
 
 function addEvent(type, name, date, time, venue, tickets) {
-    var newEvent = { name: name, date: date, timings: time, venue: venue, tickets: tickets };
-    switch(type) {
-        case 'movies':
-            movies.push(newEvent);
-            break;
-        case 'concerts':
-            concerts.push(newEvent);
-            break;
-        case 'buses':
-            concerts.push(newEvent);
-            break;
-        case 'flights':
-            concerts.push(newEvent);
-            break;
-        case 'trains':
-            concerts.push(newEvent);
-            break;
-        
-        default:
-            console.error('Invalid event type');
-    }
+    const newEvent = { name: name, date: date, timings: time, venue: venue, tickets: tickets , type: type};
+    fetch("http://127.0.0.1:8080/addevent", {
+      method: 'POST',
+      headers: {
+      'Content-Type': 'application/json', 
+  },
+      body: JSON.stringify(newEvent), // Convert data to string
+  });
     // Refresh the displayed category to show the new event
     showCategory(type);
 }
 
 
 
+// These are same as in user menu we call the same apis here to show data on both menues.
 
 
 
+var concerts = fetch('http://127.0.0.1:8080/showconcerts', {
+  method: 'GET'
+}).then(response => response.json());
 
-var concerts = [
-  { name: "Jazz Night", date: "2024-01-15", timings: "19:00", venue: "Downtown Arena", tickets: "120" },
-  { name: "Rock Fest", date: "2024-01-20", timings: "18:00", venue: "Riverfront Amphitheater", tickets: "200" }
-];
+var buses = fetch('http://127.0.0.1:8080/showbuses', {
+  method: 'GET'
+}).then(response => response.json());
 
-var buses = [
-  { name: "Capital Express", date: "2024-01-16", timings: "08:00", venue: "Bus Terminal A", tickets: "30" },
-  { name: "City Shuttle", date: "2024-01-16", timings: "09:00", venue: "Bus Terminal B", tickets: "40" }
-];
+var flights =  fetch('http://127.0.0.1:8080/showflights', {
+  method: 'GET'
+}).then(response => response.json());
 
-var flights = [
-  { name: "Airways 101", date: "2024-01-17", timings: "10:00", venue: "International Airport", tickets: "150" },
-  { name: "Skyline 302", date: "2024-01-18", timings: "16:00", venue: "Domestic Airport", tickets: "200" }
-];
+var trains = fetch('http://127.0.0.1:8080/showtrains', {
+  method: 'GET'
+}).then(response => response.json());
 
-var trains = [
-  { name: "InterCity Express", date: "2024-01-19", timings: "14:00", venue: "Central Station", tickets: "100" },
-  { name: "Coastal Liner", date: "2024-01-20", timings: "15:00", venue: "East Station", tickets: "80" }
-];
-
-var movies = [
-  { name: "Train to Busan", date: "2024-01-19", timings: "14:00", venue: "Giga mall", tickets: "100" },
-  { name: "Intersteler", date: "2024-01-20", timings: "15:00", venue: "Centaurus", tickets: "80" },
-  { name: "Train to Busan", date: "2024-01-19", timings: "14:00", venue: "Giga mall", tickets: "100" }
-];
+var movies = fetch('http://127.0.0.1:8080/showmovies', {
+  method: 'GET'
+}).then(response => response.json());
   
 
 // Dummy data for user's bookings
@@ -137,19 +118,19 @@ function createBookingButton() {
     categoryContent.innerHTML = ''; // Clear the content
     
     switch (category) {
-      case 'movies':
+      case 'Movie':
         displayMovies();
         break;
-      case 'concerts':
+      case 'Concert':
         displayConcerts();
         break;
-      case 'buses':
+      case 'Bus':
         displayBuses();
         break;
-      case 'flights':
+      case 'Flight':
         displayFlights();
         break;
-      case 'trains':
+      case 'Train':
         displayTrains();
         break;
       default:
@@ -160,60 +141,70 @@ function createBookingButton() {
   // Function to display movies
   function displayMovies() {
     var categoryContent = document.getElementById('categoryContent');
-    movies.forEach(function(movie, index) {
+    movies.then(data => {
+    data.forEach(function(movie, index) {
       var movieItem = document.createElement('div');
       movieItem.classList.add('category');
-      movieItem.innerHTML = `<strong>${movie.name}</strong> <br> Date: ${movie.date} <br> Timings: ${movie.timings} <br> Terminal: ${movie.venue} <br> Tickets Available: ${movie.tickets}`;
+      movieItem.innerHTML = `<strong>${movie.eventname}</strong> <br> Date: ${movie.Schedule} <br> Timings: ${movie.eventtime} <br> Terminal: ${movie.venue} <br> Tickets Available: ${movie.TicketAvailability}`;
       movieItem.appendChild(createBookingButton());
       categoryContent.appendChild(movieItem);
     });
+  });
   }
   
   function displayConcerts() {
     var categoryContent = document.getElementById('categoryContent');
-    concerts.forEach(function(concert, index) {
+    concerts.then(data => {
+    data.forEach(function(concert, index) {
       var concertItem = document.createElement('div');
       concertItem.classList.add('category');
-      concertItem.innerHTML = `<strong>${concert.name}</strong> <br> Date: ${concert.date} <br> Timings: ${concert.timings} <br> Terminal: ${concert.venue} <br> Tickets Available: ${concert.tickets}`;
+      concertItem.innerHTML = `<strong>${concert.eventname}</strong> <br> Date: ${concert.Schedule} <br> Timings: ${concert.eventtime} <br> Terminal: ${concert.venue} <br> Tickets Available: ${concert.TicketAvailability}`;
       concertItem.appendChild(createBookingButton());
       categoryContent.appendChild(concertItem);
     });
+  });
   }
   
   function displayBuses() {
     var categoryContent = document.getElementById('categoryContent');
-    buses.forEach(function(bus, index) {
+    buses.then(data => {
+    data.forEach(function(bus, index) {
       var busItem = document.createElement('div');
       busItem.classList.add('category');
-      busItem.innerHTML = `<strong>${bus.name}</strong> <br> Date: ${bus.date} <br> Timings: ${bus.timings} <br> Terminal: ${bus.venue} <br> Tickets Available: ${bus.tickets}`;
+      busItem.innerHTML = `<strong>${bus.eventname}</strong> <br> Date: ${bus.Schedule} <br> Timings: ${bus.eventtime} <br> Terminal: ${bus.venue} <br> Tickets Available: ${bus.TicketAvailability}`;
       busItem.appendChild(createBookingButton());
       categoryContent.appendChild(busItem);
     });
+  });
   }
 
   function displayFlights() {
     var categoryContent = document.getElementById('categoryContent');
-    flights.forEach(function(flight, index) {
+    flights.then(data => {
+    data.forEach(function(flight, index) {
       var flightItem = document.createElement('div');
       flightItem.classList.add('category');
-      flightItem.innerHTML = `<strong>${flight.name}</strong> <br> Date: ${flight.date} <br> Timings: ${flight.timings} <br> Airport: ${flight.venue} <br> Seats Available: ${flight.tickets}`;
+      flightItem.innerHTML = `<strong>${flight.eventname}</strong> <br> Date: ${flight.Schedule} <br> Timings: ${flight.eventtime} <br> Airport: ${flight.venue} <br> Seats Available: ${flight.TicketAvailability}`;
       flightItem.appendChild(createBookingButton());
       categoryContent.appendChild(flightItem);
     });
+  });
   }
   
   function displayTrains() {
     var categoryContent = document.getElementById('categoryContent');
-    trains.forEach(function(train, index) {
+    trains.then(data => {
+    data.forEach(function(train, index) {
       var trainItem = document.createElement('div');
       trainItem.classList.add('category');
-      trainItem.innerHTML = `<strong>${train.name}</strong> <br> Date: ${train.date} <br> Timings: ${train.timings} <br> Station: ${train.venue} <br> Tickets Available: ${train.tickets}`;
+      trainItem.innerHTML = `<strong>${train.eventname}</strong> <br> Date: ${train.Schedule} <br> Timings: ${train.eventtime} <br> Station: ${train.venue} <br> Tickets Available: ${train.TicketAvailability}`;
       trainItem.appendChild(createBookingButton());
       categoryContent.appendChild(trainItem);
     });
+  });
   }
   
 
 
   // Initial display
-  showCategory('movies');
+  showCategory('Movie');
