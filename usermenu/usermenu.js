@@ -80,7 +80,7 @@ function createBookingButton() {
   button.textContent = 'Book Now';
   button.onclick = function() {
     alert('Redirecting to payment portal...');
-    window.location.href = "../Payment/payment.html";
+    window.location.href = "../Payment/index.html";
 
   };
   return button;
