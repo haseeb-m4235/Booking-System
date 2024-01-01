@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment Form</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="payment-details">
+  <h2>Payment Details</h2>
+  <p>Fields with an "*" are required.</p>
+  <form id="paymentForm">
+    <label for="cardType">Card Type*</label>
+    <select id="cardType">
+      <option value="">--- Select Card Type ---</option>
+      <option value="visa">Visa</option>
+      <option value="mastercard">MasterCard</option>
+      <option value="amex">American Express</option>
+    </select>
+
+    <label for="cardNumber">Card Number*</label>
+    <input type="text" id="cardNumber" placeholder="Card Number">
+
+    <label for="expiryDate">Expiry Date*</label>
+    <select id="expiryMonth">
+      <option value="">--- Month ---</option>
+      <!-- Months will be populated by JavaScript -->
+    </select>
+    <select id="expiryYear">
+      <option value="">--- Year ---</option>
+      <!-- Years will be populated by JavaScript -->
+    </select>
+
+    <label for="cardHolder">Card Holder*</label>
+    <input type="text" id="cardHolder" placeholder="Card Holder">
+
+    <label for="email">E-mail*</label>
+    <input type="email" id="email" placeholder="E-mail">
+
+    <label for="amount">Amount to be charged to card:</label>
+    <input type="text" id="amount" value="0.22" readonly>
+
+    <div class="checkbox">
+      <input type="checkbox" id="terms">
+      <label for="terms">I have read and agree to the terms and conditions.</label>
+    </div>
+
+    <div class="buttons">
+      <button type="submit">Continue</button>
+      <button type="reset">Clear</button>
+      <button type="button" onclick="cancelPayment()">Cancel</button>
+    </div>
+  </form>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
