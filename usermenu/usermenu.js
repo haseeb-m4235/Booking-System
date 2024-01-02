@@ -19,7 +19,20 @@ var trains = fetch('http://127.0.0.1:8080/showtrains', {
 var movies = fetch('http://127.0.0.1:8080/showmovies', {
   method: 'GET'
 }).then(response => response.json());
-  
+
+
+function mapButton(venuelink) {
+  var button = document.createElement('mapbutton');
+  button.textContent = 'View on map';
+  button.onclick = function() {
+    alert('Redirecting to Map...');
+    window.location.href = venuelink;
+
+  };
+  return button;
+}
+
+
 
 
 const myBookings = fetch('http://127.0.0.1:8080/senduserbookings', {
@@ -134,6 +147,7 @@ function displayMovies() {
     var movieItem = document.createElement('div');
     movieItem.classList.add('category');
     movieItem.innerHTML = `<strong>${movie.eventname}</strong> <br> Date: ${movie.Schedule} <br> Timings: ${movie.eventtime} <br> Terminal: ${movie.venue} <br> Tickets Available: ${movie.TicketAvailability} <br> Number of tickets to book: `;
+    movieItem.appendChild(mapButton());
     movieItem.appendChild(createBookingButton());
     movieItem.appendChild(ticketlistButton(movie.tickets));
     categoryContent.appendChild(movieItem);
@@ -148,6 +162,7 @@ function displayConcerts() {
     var concertItem = document.createElement('div');
     concertItem.classList.add('category');
     concertItem.innerHTML = `<strong>${concert.eventname}</strong> <br> Date: ${concert.Schedule} <br> Timings: ${concert.eventtime} <br> Terminal: ${concert.venue} <br> Tickets Available: ${concert.TicketAvailability} <br> Number of tickets to book: `;
+    concertItem.appendChild(mapButton());
     concertItem.appendChild(createBookingButton());
     concertItem.appendChild(ticketlistButton(concert.tickets));
     categoryContent.appendChild(concertItem);
@@ -162,6 +177,7 @@ function displayBuses() {
     var busItem = document.createElement('div');
     busItem.classList.add('category');
     busItem.innerHTML = `<strong>${bus.eventname}</strong> <br> Date: ${bus.Schedule} <br> Timings: ${bus.eventtime} <br> Terminal: ${bus.venue} <br> Tickets Available: ${bus.TicketAvailability} <br> Number of tickets to book: `;
+    busItem.appendChild(mapButton());
     busItem.appendChild(createBookingButton());
     busItem.appendChild(ticketlistButton(bus.tickets));
     categoryContent.appendChild(busItem);
@@ -176,6 +192,7 @@ function displayFlights() {
     var flightItem = document.createElement('div');
     flightItem.classList.add('category');
     flightItem.innerHTML = `<strong>${flight.eventname}</strong> <br> Date: ${flight.Schedule} <br> Timings: ${flight.eventtime} <br> Airport: ${flight.venue} <br> Seats Available: ${flight.TicketAvailability} <br> Number of tickets to book: `;
+    flightItem.appendChild(mapButton());
     flightItem.appendChild(createBookingButton());
     flightItem.appendChild(ticketlistButton(flight.tickets));
     categoryContent.appendChild(flightItem);
@@ -190,6 +207,7 @@ function displayTrains() {
     var trainItem = document.createElement('div');
     trainItem.classList.add('category');
     trainItem.innerHTML = `<strong>${train.eventname}</strong> <br> Date: ${train.Schedule} <br> Timings: ${train.eventtime} <br> Station: ${train.venue} <br> Tickets Available: ${train.TicketAvailability} <br> Number of tickets to book: `;
+    trainItem.appendChild(mapButton());
     trainItem.appendChild(createBookingButton());
     trainItem.appendChild(ticketlistButton(train.tickets));
     categoryContent.appendChild(trainItem);
