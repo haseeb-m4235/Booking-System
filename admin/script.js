@@ -52,16 +52,17 @@ document.getElementById('eventForm').addEventListener('submit', function(e) {
     var eventDate = document.getElementById('eventDate').value;
     var eventTime = document.getElementById('eventTime').value;
     var eventVenue = document.getElementById('eventVenue').value;
+    var venueLink = document.getElementById('venueLink').value;
     var eventTickets = document.getElementById('eventTickets').value;
     
     // Assuming you have a function to add events to the respective arrays
-    addEvent(eventType, eventName, eventDate, eventTime, eventVenue, eventTickets);
+    addEvent(eventType, eventName, eventDate, eventTime, eventVenue, eventTickets, venueLink);
     modal.style.display = "none";
     alert("Event created successfully!");
 });
 
-function addEvent(type, name, date, time, venue, tickets) {
-    const newEvent = { name: name, date: date, timings: time, venue: venue, tickets: tickets , type: type};
+function addEvent(type, name, date, time, venue, tickets, venueLink) {
+    const newEvent = { name: name, date: date, timings: time, venue: venue, tickets: tickets , type: type, venueLink: venueLink};
     fetch("http://127.0.0.1:8080/addevent", {
       method: 'POST',
       headers: {
